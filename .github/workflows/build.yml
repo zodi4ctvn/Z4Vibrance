@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        shell: powershell
+        run: powershell -ExecutionPolicy Bypass -File .\build.ps1
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Z4Vibrance
+          path: bin/Z4Vibrance.exe
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Z4Vibrance
+          path: dist
+
+      - name: Create release (tag v*)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/Z4Vibrance.exe
+          generate_release_notes: true

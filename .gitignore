@@ -1,0 +1,36 @@
+# --- Derleme çıktıları ---
+bin/
+obj/
+*.exe
+*.pdb
+*.dll
+*.ilk
+*.obj
+
+# --- Visual Studio / Rider / VS Code ---
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- Geçici dosyalar ---
+*.tmp
+*.bak
+*.log
+*.cache
+*~
+
+# --- Windows sistem dosyaları ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Kullanıcı verisi (asla commit etme) ---
+# Not: Uygulama verileri %AppData%\Z4Vibrance altındadır, depo içinde değildir.
+config.json
+session.lock
+logs/
